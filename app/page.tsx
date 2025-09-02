@@ -1,29 +1,43 @@
-"use client"
+"use client";
 
-import type React from "react"
+import type React from "react";
 
-import { useState } from "react"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Card, CardContent } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
-import { CheckCircle, Mail, Rocket, Sparkles } from "lucide-react"
-import { ThemeToggle } from "@/components/theme-toggle"
+import { useState } from "react";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Card, CardContent } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { CheckCircle, Mail, Rocket, Sparkles } from "lucide-react";
+import { ThemeToggle } from "@/components/theme-toggle";
 
 export default function LaunchingSoon() {
-  const [email, setEmail] = useState("")
-  const [isSubmitted, setIsSubmitted] = useState(false)
-  const [isLoading, setIsLoading] = useState(false)
+  const [email, setEmail] = useState("");
+  const [isSubmitted, setIsSubmitted] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    if (!email) return
-
-    setIsLoading(true)
-    // Simulate API call
-    await new Promise((resolve) => setTimeout(resolve, 1000))
-    setIsSubmitted(true)
-    setIsLoading(false)
+  async function handleSubmit(e: React.FormEvent) {
+    e.preventDefault();
+    if (!email) return;
+    setIsLoading(true);
+    try {
+      const res = await fetch("/api/waitlist", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email }),
+      });
+      if (!res.ok) {
+        const { error } = await res.json().catch(() => ({ error: "Failed" }));
+        throw new Error(error || "Failed");
+      }
+      setIsSubmitted(true);
+      setEmail("");
+    } catch (err) {
+      // optional: show a toast
+      console.error(err);
+      alert("Could not add your email. Try again?");
+    } finally {
+      setIsLoading(false);
+    }
   }
 
   return (
@@ -85,14 +99,19 @@ export default function LaunchingSoon() {
                     )}
                   </Button>
                 </div>
-                <p className="text-xs text-muted-foreground">We&apos;ll never spam you. Unsubscribe at any time.</p>
+                <p className="text-xs text-muted-foreground">
+                  We&apos;ll never spam you. Unsubscribe at any time.
+                </p>
               </form>
             ) : (
               <div className="text-center space-y-3">
                 <CheckCircle className="w-12 h-12 text-red-600 mx-auto" />
-                <h3 className="text-lg font-semibold text-foreground">You&apos;re on the list!</h3>
+                <h3 className="text-lg font-semibold text-foreground">
+                  You&apos;re on the list!
+                </h3>
                 <p className="text-sm text-muted-foreground">
-                  Thanks for joining! We&apos;ll send you an email as soon as we launch.
+                  Thanks for joining! We&apos;ll send you an email as soon as we
+                  launch.
                 </p>
               </div>
             )}
@@ -106,29 +125,37 @@ export default function LaunchingSoon() {
               <Rocket className="w-6 h-6 text-red-600" />
             </div>
             <h3 className="font-semibold text-sm">Fast Effect</h3>
-            <p className="text-xs text-muted-foreground">Five minutes is enough</p>
+            <p className="text-xs text-muted-foreground">
+              Five minutes is enough
+            </p>
           </div>
           <div className="text-center space-y-2">
             <div className="w-12 h-12 bg-red-400/10 rounded-lg flex items-center justify-center mx-auto">
               <Sparkles className="w-6 h-6 text-red-500" />
             </div>
             <h3 className="font-semibold text-sm">Efficient Rest</h3>
-            <p className="text-xs text-muted-foreground">Maximize your recovery</p>
+            <p className="text-xs text-muted-foreground">
+              Maximize your recovery
+            </p>
           </div>
           <div className="text-center space-y-2">
             <div className="w-12 h-12 bg-red-600/10 rounded-lg flex items-center justify-center mx-auto">
               <CheckCircle className="w-6 h-6 text-red-700" />
             </div>
             <h3 className="font-semibold text-sm">Scientifically Backed</h3>
-            <p className="text-xs text-muted-foreground">Research-proven methods</p>
+            <p className="text-xs text-muted-foreground">
+              Research-proven methods
+            </p>
           </div>
         </div>
 
         {/* Footer */}
         <div className="pt-8 text-center">
-          <p className="text-sm text-muted-foreground">© 2025 ThetaMask. All rights reserved.</p>
+          <p className="text-sm text-muted-foreground">
+            © 2025 ThetaMask. All rights reserved.
+          </p>
         </div>
       </div>
     </div>
-  )
+  );
 }
