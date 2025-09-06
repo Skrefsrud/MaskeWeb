@@ -66,7 +66,7 @@ export default function LaunchingSoon() {
         </div>
 
         {/* Email signup form */}
-        <Card className="max-w-md mx-auto shadow-lg border-red-100 dark:border-border bg-white/80 dark:bg-card backdrop-blur-sm">
+        <Card className="max-w-md mx-auto shadow-lg border-red-100 light:border-boder light:bg-card dark:border-border bg-white/80 dark:bg-card backdrop-blur-sm">
           <CardContent className="p-6">
             {!isSubmitted ? (
               <form onSubmit={handleSubmit} className="space-y-4">
