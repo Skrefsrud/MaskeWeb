@@ -54,10 +54,6 @@ export default function LaunchingSoon() {
 
       <div className="relative z-10 max-w-2xl mx-auto text-center space-y-8">
         {/* Status badge */}
-        <Badge variant="secondary" className="px-4 py-2 text-sm font-medium">
-          <Sparkles className="w-4 h-4 mr-2" />
-          Coming Soon
-        </Badge>
 
         {/* Main heading */}
         <div className="space-y-4">
@@ -70,7 +66,7 @@ export default function LaunchingSoon() {
         </div>
 
         {/* Email signup form */}
-        <Card className="max-w-md mx-auto">
+        <Card className="max-w-md mx-auto shadow-lg border-red-100 light:border-boder light:bg-card dark:border-border bg-white/80 dark:bg-card backdrop-blur-sm">
           <CardContent className="p-6">
             {!isSubmitted ? (
               <form onSubmit={handleSubmit} className="space-y-4">
@@ -81,7 +77,7 @@ export default function LaunchingSoon() {
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     required
-                    className="flex-1"
+                    className="flex-1 border-red-200 focus:border-red-400 dark:border-border shadow-md focus:shadow-lg transition-shadow duration-200"
                     disabled={isLoading}
                   />
                   <Button
@@ -122,7 +118,7 @@ export default function LaunchingSoon() {
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 max-w-lg mx-auto">
           <div className="text-center space-y-2">
             <div className="w-12 h-12 bg-red-500/10 rounded-lg flex items-center justify-center mx-auto">
-              <Rocket className="w-6 h-6 text-red-600" />
+              <Rocket className="w-6 h-6 text-red-500" />
             </div>
             <h3 className="font-semibold text-sm">Fast Effect</h3>
             <p className="text-xs text-muted-foreground">
@@ -130,7 +126,7 @@ export default function LaunchingSoon() {
             </p>
           </div>
           <div className="text-center space-y-2">
-            <div className="w-12 h-12 bg-red-400/10 rounded-lg flex items-center justify-center mx-auto">
+            <div className="w-12 h-12 bg-red-500/10 rounded-lg flex items-center justify-center mx-auto">
               <Sparkles className="w-6 h-6 text-red-500" />
             </div>
             <h3 className="font-semibold text-sm">Efficient Rest</h3>
@@ -139,8 +135,8 @@ export default function LaunchingSoon() {
             </p>
           </div>
           <div className="text-center space-y-2">
-            <div className="w-12 h-12 bg-red-600/10 rounded-lg flex items-center justify-center mx-auto">
-              <CheckCircle className="w-6 h-6 text-red-700" />
+            <div className="w-12 h-12 bg-red-500/10 rounded-lg flex items-center justify-center mx-auto">
+              <CheckCircle className="w-6 h-6 text-red-500" />
             </div>
             <h3 className="font-semibold text-sm">Scientifically Backed</h3>
             <p className="text-xs text-muted-foreground">
